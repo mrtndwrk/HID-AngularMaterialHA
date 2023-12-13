@@ -1,0 +1,70 @@
+button.active {
+    background-color: #6d42ba;
+    color: white;
+}
+button:hover {
+    background-color: #c7a8ff;
+    color: white;
+}
+button{
+    margin-right: 3px;
+    border: 1px solid rgb(179, 179, 179);
+}
+
+.button-container{
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+#btn-child-deregister{
+    padding: 20px;
+}
+
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+  }
+  
+  .header-item {
+    flex: 1;
+    padding: 0 8px;
+    text-align: center;
+  }
+  
+  .child-list {
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
+    max-width: 1300px;
+    height: 250px;
+  }
+  .child-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .child-property {
+    flex: 1;
+    padding: 0 8px;
+    text-align: center;
+  }
+  
+  .child-property:last-child {
+    flex: 0.5; 
+    text-align: right;
+  }
+  
+  
+
+  .mat-mdc-paginator-container{
+    justify-content: center; 
+  }

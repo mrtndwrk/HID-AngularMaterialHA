@@ -1,0 +1,30 @@
+<div class="child-list">
+    <div class="header">
+      <div class="header-item">Name</div>
+      <div class="header-item">Kindergarten</div>
+      <div class="header-item">Adresse</div>
+      <div class="header-item">Alter</div>
+      <div class="header-item">Geburtsdatum</div>
+      <div class="header-item"></div>
+    </div>
+  
+    <div class="child-item" *ngFor="let child of storeService.children">
+      <div class="child-property">{{child.name}}</div>
+      <div class="child-property">{{child.kindergarden.name}}</div>
+      <div class="child-property">{{child.kindergarden.address}}</div>
+      <div class="child-property">{{getAge(child.birthDate)}}</div>
+      <div class="child-property">{{child.birthDate | date:'longDate'}}</div>
+      <div class="child-property">
+        <button id="btn-child-deregister" mat-flat-button (click)="cancelRegistration(child.id)">Kind abmelden</button>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+<mat-paginator
+  [length]="storeService.childrenTotalCount"
+  [pageSize]="2"
+  (page)="onPageChange($event)"
+></mat-paginator>

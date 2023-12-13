@@ -1,0 +1,5 @@
+<app-data [currentPage]="currentPage" (selectPageEvent)="receiveMessage($event)"></app-data>
+<br>
+<app-button (toggleForm)="toggleForm()"></app-button>
+
+<app-add-data *ngIf="showForm"></app-add-data>

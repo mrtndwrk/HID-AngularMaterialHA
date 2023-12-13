@@ -1,0 +1,11 @@
+# Ignore log files
+*.log
+
+# Ignore node_modules directory
+node_modules/
+.angular/cache/
+webpack_ouput/
+
+# Ignore build artifacts
+/dist/
+/out/
