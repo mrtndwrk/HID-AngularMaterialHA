@@ -42,7 +42,12 @@ export class DataComponent implements OnInit {
   }
 
   public cancelRegistration(childId: string) {
+    this.loading = true;
+    this.storeService.children = [];
     this.backendService.deleteChildData(childId, this.currentPage);
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000); 
   }
 
   private loadData(): void {
@@ -52,7 +57,7 @@ export class DataComponent implements OnInit {
     // Simulating a delay to show the spinner for a short duration
     setTimeout(() => {
       this.loading = false;
-    }, 1000); // Adjust the timeout duration as needed
+    }, 1000); 
   }
   
 
