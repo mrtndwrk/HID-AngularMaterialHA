@@ -37,4 +37,19 @@
     <button id="submitbtn" mat-flat-button color="accent" type="submit" [disabled]="!addChildForm.valid">Erfassen</button>
   </form>
 
-  
+  <ng-template #successDialog let-c="close" let-d="dismiss">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Kind erfolgreich registriert</h4>
+        <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Kind erfolgreich registriert</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">OK</button>
+      </div>
+    </div>
+  </ng-template>

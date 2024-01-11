@@ -20,6 +20,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SuccessDialogComponent } from './success-dialog/success-dialog.component';
 
 
 
@@ -32,6 +33,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HeaderComponent,
     ButtonComponent,
     PaginationPipe,
+    SuccessDialogComponent,
   ],
   imports: [
     BrowserModule,

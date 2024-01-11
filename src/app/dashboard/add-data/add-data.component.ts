@@ -3,7 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { BackendService } from 'src/app/shared/backend.service';
 import { StoreService } from 'src/app/shared/store.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Ng2BootstrapModule } from 'ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SuccessDialogComponent } from 'src/app/success-dialog/success-dialog.component';
+
 
 @Component({
   selector: 'app-add-data',
@@ -15,7 +17,8 @@ export class AddDataComponent implements OnInit {
     private formbuilder: FormBuilder,
     public storeService: StoreService,
     public backendService: BackendService,
-    public dialog: MatDialog, // Inject MatDialog
+    public dialog: MatDialog, 
+    private modalService: NgbModal,
   ) {}
 
   public addChildForm: any;
@@ -34,12 +37,17 @@ export class AddDataComponent implements OnInit {
     if (this.addChildForm.valid) {
       this.backendService.addChildData(this.addChildForm.value, this.currentPage);
       this.addChildForm.reset();
-
+      
+      this.openSuccessDialog();
 
     }
   }
 
 
+  openSuccessDialog(): void {
+    const modalRef = this.modalService.open(SuccessDialogComponent);
+    // You can perform additional actions with the modalRef if needed
+  }
 
   onToggleForm(): void {
     this.isFormOpen = !this.isFormOpen;
