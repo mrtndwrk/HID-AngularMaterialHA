@@ -59,6 +59,12 @@
       "kindergardenId": 1,
       "birthDate": "2023-11-15T23:00:00.000Z",
       "id": "VqcLBGU"
+    },
+    {
+      "name": "Martin Dworak",
+      "kindergardenId": 1,
+      "birthDate": "2024-01-10T23:00:00.000Z",
+      "id": "30Z7Gap"
     }
   ],
   "kindergardens": [
