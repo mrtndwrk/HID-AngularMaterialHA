@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { BackendService } from 'src/app/shared/backend.service';
 import { StoreService } from 'src/app/shared/store.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ToastrService } from 'ngx-toastr';
+import { Ng2BootstrapModule } from 'ng-bootstrap';
 
 @Component({
   selector: 'app-add-data',
