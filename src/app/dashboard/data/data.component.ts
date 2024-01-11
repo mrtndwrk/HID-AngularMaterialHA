@@ -3,6 +3,7 @@ import { BackendService } from 'src/app/shared/backend.service';
 import { CHILDREN_PER_PAGE } from 'src/app/shared/constants';
 import { StoreService } from 'src/app/shared/store.service';
 import { PageEvent } from '@angular/material/paginator';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-data',
@@ -14,9 +15,12 @@ export class DataComponent implements OnInit {
 
   @Input() currentPage!: number;
   @Output() selectPageEvent = new EventEmitter<number>();
+  loading = true;
 
   ngOnInit(): void {
     this.backendService.getChildren(this.currentPage);
+    this.loadData();
+
   }
 
   getAge(birthDate: string) {
@@ -26,7 +30,11 @@ export class DataComponent implements OnInit {
   // MatPaginator Page Change Event
   onPageChange(event: PageEvent): void {
     this.selectPageEvent.emit(event.pageIndex + 1);
-    this.backendService.getChildren(event.pageIndex + 1);
+    
+    // Clear the existing data before loading the new page
+    this.storeService.children = [];
+  
+    this.loadData();
   }
 
   public returnAllPages() {
@@ -36,4 +44,16 @@ export class DataComponent implements OnInit {
   public cancelRegistration(childId: string) {
     this.backendService.deleteChildData(childId, this.currentPage);
   }
+
+  private loadData(): void {
+    this.loading = true;
+    this.backendService.getChildren(this.currentPage);
+
+    // Simulating a delay to show the spinner for a short duration
+    setTimeout(() => {
+      this.loading = false;
+    }, 1000); // Adjust the timeout duration as needed
+  }
+  
+
 }

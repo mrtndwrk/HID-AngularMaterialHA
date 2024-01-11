@@ -24,6 +24,7 @@ import { SuccessDialogComponent } from './success-dialog/success-dialog.componen
 import { KindergarteninfoComponent } from './kindergarteninfo/kindergarteninfo.component';
 import { MatCardModule } from '@angular/material/card'; 
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 
@@ -56,7 +57,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatDialogModule,
     NgbModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatProgressSpinnerModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
