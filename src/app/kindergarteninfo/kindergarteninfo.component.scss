@@ -1,29 +1,35 @@
+/* kindergarteninfo.component.scss */
+
 .header {
     text-align: center;
     margin-bottom: 20px;
   }
   
   .kindergarten-card {
-    margin: 10px;
-    width: 750px;
+    width: 500px;
     margin-bottom: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
   }
   
   .kindergarten-card:hover {
-    transform: scale(1.05); /* Adjust the scaling factor as needed */
+    transform: scale(1.05);
   }
   
   .kindergarten-card:nth-child(even) {
-    background-color: #f0f0f0; /* Faint gray color */
+    background-color: #f0f0f0;
   }
   
   .kindergarten-avatar {
     width: 80px;
     height: 80px;
-    background-color: #2196f3; /* Use your preferred color */
+    background-color: #2196f3;
     border-radius: 50%;
+  }
+  
+  .kindergarten-image {
+    height: 200px; /* Set the desired height for the images */
+    object-fit: cover; /* Ensure the image covers the designated space */
   }
   
   h1, h3 {
@@ -32,7 +38,7 @@
   
   h3 {
     font-style: italic;
-    color: #777; /* Use your preferred color */
+    color: #777;
     text-align: center;
   }
   

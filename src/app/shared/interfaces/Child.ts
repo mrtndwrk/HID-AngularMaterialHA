@@ -4,7 +4,9 @@ export interface Child {
     id: string;
     name: string;
     birthDate: string,
-    kindergardenId: number
+    kindergardenId: number,
+    imageFileName: string;
+
   }
 
   export interface ChildResponse {

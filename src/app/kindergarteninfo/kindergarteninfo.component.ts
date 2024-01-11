@@ -7,8 +7,11 @@ import { Kindergarden } from '../shared/interfaces/Kindergarden';
   templateUrl: './kindergarteninfo.component.html',
   styleUrls: ['./kindergarteninfo.component.scss']
 })
-export class KindergarteninfoComponent implements OnInit {
+export class KindergarteninfoComponent {
+
   public kindergardens: Kindergarden[] = [];
+
+  public imagePath: string = "./../assets/images/Kindergarten.jpg";
 
   constructor(private backendService: BackendService) { }
 
