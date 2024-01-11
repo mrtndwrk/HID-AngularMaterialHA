@@ -1,5 +1,3 @@
-
-
 <div class="child-list">
     <div class="header">
       <div class="header-item">Name</div>
@@ -9,11 +7,20 @@
       <div class="header-item">Geburtsdatum</div>
       <div class="header-item"></div>
     </div>
+
+    <mat-form-field>
+      <mat-label>Filter by Kindergarten</mat-label>
+      <mat-select [(value)]="selectedKindergarten">
+        <mat-option *ngFor="let kindergarten of kindergartens" [value]="kindergarten.name">
+          {{ kindergarten.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     
     <div class="loading-spinner" *ngIf="loading">
       <mat-spinner mode="indeterminate"></mat-spinner>
     </div>
-    
+
     <div class="child-item" *ngFor="let child of storeService.children">
       <div class="child-property">{{child.name}}</div>
       <div class="child-property">{{child.kindergarden.name}}</div>

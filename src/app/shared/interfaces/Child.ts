@@ -6,7 +6,7 @@ export interface Child {
     birthDate: string,
     kindergardenId: number,
     imageFileName: string;
-
+    registrationDate: Date;
   }
 
   export interface ChildResponse {
