@@ -1,0 +1,24 @@
+<div class="header">
+    <h1>Kindergarten Infos</h1>
+    <h3>Here you can find all relevant information about our Kindergardens!</h3>
+  </div>
+  
+  <mat-grid-list cols="1" gutterSize="16px">
+    <mat-grid-tile *ngFor="let kindergarten of kindergardens" class="kindergarten-tile" colspan="1">
+      <mat-card class="kindergarten-card">
+        <mat-card-header>
+          <div mat-card-avatar class="kindergarten-avatar"></div>
+          <mat-card-title>{{ kindergarten.name }}</mat-card-title>
+          <mat-card-subtitle>{{ kindergarten.typ === 1 ? 'Privat' : 'Öffentlich' }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div>ID: {{ kindergarten.id }}</div>
+          <div>Address: {{ kindergarten.address }}</div>
+          <div>Betreiber: {{ kindergarten.betreiber }}</div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+  
+  <div style="margin-bottom: 20px;"></div>
+  

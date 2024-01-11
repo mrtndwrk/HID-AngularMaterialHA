@@ -21,6 +21,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SuccessDialogComponent } from './success-dialog/success-dialog.component';
+import { KindergarteninfoComponent } from './kindergarteninfo/kindergarteninfo.component';
+import { MatCardModule } from '@angular/material/card'; 
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 
@@ -34,6 +37,7 @@ import { SuccessDialogComponent } from './success-dialog/success-dialog.componen
     ButtonComponent,
     PaginationPipe,
     SuccessDialogComponent,
+    KindergarteninfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +55,8 @@ import { SuccessDialogComponent } from './success-dialog/success-dialog.componen
     MatPaginatorModule,
     MatDialogModule,
     NgbModule,
+    MatCardModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
