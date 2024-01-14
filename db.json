@@ -7,66 +7,6 @@
       "kindergardenId": 1
     },
     {
-      "id": "_iL790m",
-      "name": "Nikolaus Polarius 7",
-      "birthDate": "2019-01-04",
-      "kindergardenId": 2
-    },
-    {
-      "name": "Paulus Fensterl 8",
-      "kindergardenId": 2,
-      "birthDate": "2023-09-28",
-      "id": "9py_fwi"
-    },
-    {
-      "name": "Heidi aus den Bergen 9",
-      "kindergardenId": 2,
-      "birthDate": "2023-10-05",
-      "id": "hOHEFCv"
-    },
-    {
-      "name": "Traude Widmann 10",
-      "kindergardenId": 2,
-      "birthDate": "2023-10-05",
-      "id": "cu0_2Ad"
-    },
-    {
-      "name": "Franz",
-      "kindergardenId": 1,
-      "birthDate": "2023-11-15T23:00:00.000Z",
-      "id": "VqcLBGU"
-    },
-    {
-      "name": "Martin Dworak",
-      "kindergardenId": 1,
-      "birthDate": "2024-01-10T23:00:00.000Z",
-      "id": "30Z7Gap"
-    },
-    {
-      "name": "asd",
-      "kindergardenId": 4,
-      "birthDate": "2024-01-30T23:00:00.000Z",
-      "id": "_90c_N5"
-    },
-    {
-      "name": "test",
-      "kindergardenId": 4,
-      "birthDate": "2024-01-22T23:00:00.000Z",
-      "id": "8ZBN-2z"
-    },
-    {
-      "name": "Max Muster",
-      "kindergardenId": 4,
-      "birthDate": "2024-01-24T23:00:00.000Z",
-      "id": "WF3zExM"
-    },
-    {
-      "name": "asd",
-      "kindergardenId": 3,
-      "birthDate": "2024-01-08T23:00:00.000Z",
-      "id": "uQnEqi_"
-    },
-    {
       "name": "Masd",
       "kindergardenId": 4,
       "birthDate": "2024-01-23T23:00:00.000Z",
@@ -155,12 +95,6 @@
       "kindergardenId": 2,
       "birthDate": "2024-01-08T23:00:00.000Z",
       "id": "lSaKJpk"
-    },
-    {
-      "name": "asd",
-      "kindergardenId": 2,
-      "birthDate": "2024-01-10T23:00:00.000Z",
-      "id": "RHyvKp1"
     },
     {
       "name": "asd",

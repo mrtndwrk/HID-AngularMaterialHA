@@ -5,6 +5,8 @@ import { StoreService } from 'src/app/shared/store.service';
 import { PageEvent } from '@angular/material/paginator';
 import { ChildResponse } from 'src/app/shared/interfaces/Child';
 import { Child } from 'src/app/shared/interfaces/Child';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-data',
@@ -12,7 +14,7 @@ import { Child } from 'src/app/shared/interfaces/Child';
   styleUrls: ['./data.component.scss']
 })
 export class DataComponent implements OnInit {
-  constructor(public storeService: StoreService, private backendService: BackendService) {}
+  constructor(public storeService: StoreService, private backendService: BackendService, private snackBar: MatSnackBar) {}
 
   @Input() currentPage!: number;
   @Output() selectPageEvent = new EventEmitter<number>();
@@ -44,13 +46,15 @@ export class DataComponent implements OnInit {
     return Math.ceil(this.storeService.childrenTotalCount / CHILDREN_PER_PAGE);
   }
 
-  cancelRegistration(childId: string): void {
+  cancelRegistration(child: ChildResponse): void {
     this.loading = true;
     this.storeService.children = [];
-    this.backendService.deleteChildData(childId, this.currentPage).subscribe(() => {
+    this.backendService.deleteChildData(child.id, this.currentPage).subscribe(() => {
       this.loadData();
+      this.showNotification(`${child.name} wurde aus Kindergarten ${child.kindergarden.name} abgemeldet`);
     });
   }
+  
 
   sortChildren(property: string, order: 'asc' | 'desc'): void {
     this.storeService.children.sort((a, b) => {
@@ -68,6 +72,12 @@ export class DataComponent implements OnInit {
     this.loading = true;
     this.backendService.getChildren(this.currentPage).subscribe(() => {
       this.loading = false;
+    });
+  }
+
+  private showNotification(message: string): void {
+    this.snackBar.open(message, 'OK', {
+      duration: 3000, 
     });
   }
 }
