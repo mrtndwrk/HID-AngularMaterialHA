@@ -16,14 +16,18 @@ export class BackendService {
   constructor(private http: HttpClient, private storeService: StoreService) { }
 
   public getKindergardens(): Observable<Kindergarden[]> { 
-    return this.http.get<Kindergarden[]>('http://localhost:5000/kindergardens');
+    return this.http.get<Kindergarden[]>('http://localhost:5000/kindergardens').pipe(
+      tap(data => {
+        this.storeService.kindergardens = data;
+      })
+    );
   }
+  
 
   public getChildren(page: number): Observable<void> {
     return this.http.get<ChildResponse[]>(`http://localhost:5000/childs?_expand=kindergarden&_page=${page}&_limit=${CHILDREN_PER_PAGE}`, { observe: 'response' }).pipe(
       tap(data => {
         this.storeService.children = data.body!.map(child => {
-          // Assuming registrationDate is part of your ChildResponse
           return { ...child, registrationDate: new Date() }; 
         });
         this.storeService.childrenTotalCount = Number(data.headers.get('X-Total-Count'));

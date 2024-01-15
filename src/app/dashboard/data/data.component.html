@@ -5,8 +5,18 @@
       <div class="header-item">Adresse</div>
       <div class="header-item">Alter</div>
       <div class="header-item">Geburtsdatum</div>
+      <div class="header-item">Registrierungsdatum</div>
       <div class="header-item"></div>
     </div>
+
+    <mat-form-field>
+      <mat-label>Sort by</mat-label>
+      <mat-select [(value)]="selectedSortOption">
+        <mat-option value="name">Name</mat-option>
+        <mat-option value="kindergarten">Kindergarten</mat-option>
+        <mat-option value="registrationDate">Registration Date</mat-option>
+      </mat-select>
+    </mat-form-field>
 
     <mat-form-field>
       <mat-label>Filter by Kindergarten</mat-label>
@@ -21,12 +31,13 @@
       <mat-spinner mode="indeterminate"></mat-spinner>
     </div>
 
-    <div class="child-item" *ngFor="let child of storeService.children">
+    <div class="child-item" *ngFor="let child of sortedChildren()">
       <div class="child-property">{{child.name}}</div>
       <div class="child-property">{{child.kindergarden.name}}</div>
       <div class="child-property">{{child.kindergarden.address}}</div>
       <div class="child-property">{{getAge(child.birthDate)}}</div>
       <div class="child-property">{{child.birthDate | date:'longDate'}}</div>
+      <div class="child-property">{{child.registrationDate | date:'longDate'}}</div>
       <div class="child-property">
         <button id="btn-child-deregister" mat-flat-button (click)="cancelRegistration(child)">Kind abmelden</button>
       </div>

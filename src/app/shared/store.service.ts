@@ -12,5 +12,4 @@ export class StoreService {
   public kindergardens: Kindergarden[] = [];
   public children: ChildResponse[] = []
   public childrenTotalCount: number = 0;
-  isLoading: boolean = true;
 }

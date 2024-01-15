@@ -1,26 +1,15 @@
 mat-toolbar {
   text-align: center;
   img {
-    margin-left: 10px; // Adjust margin as needed
+    margin-left: 10px; 
   }
 }
 
 .nav-links {
   text-align: center;
-  margin-top: 20px;
+  margin: 20px 0;
   display: flex;
   justify-content: center;
 }
 
-.nav-link {
-  margin: 0 15px 10px;
-  text-decoration: none;
-  font-size: 18px;
-  color: #3498db;
-  transition: color 0.3s ease-in-out;
 
-  &:hover {
-    color: #2980b9;
-    text-decoration: underline;
-  }
-}

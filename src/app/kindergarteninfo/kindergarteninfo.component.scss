@@ -16,7 +16,7 @@
     transform: scale(1.05);
   }
   
-  .kindergarten-card:nth-child(even) {
+  .kindergarten-card:nth-child(3n+1) {
     background-color: #f0f0f0;
   }
   
@@ -28,8 +28,8 @@
   }
   
   .kindergarten-image {
-    height: 200px; /* Set the desired height for the images */
-    object-fit: cover; /* Ensure the image covers the designated space */
+    height: 200px; 
+    object-fit: cover; 
   }
   
   h1, h3 {
@@ -42,3 +42,15 @@
     text-align: center;
   }
   
+  .loading-spinner{
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+}
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(2, 3fr);
+  gap: 20px;
+}
+

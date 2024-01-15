@@ -26,6 +26,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSortModule } from '@angular/material/sort';
 
 
 
@@ -62,6 +63,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatGridListModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

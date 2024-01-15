@@ -10,6 +10,7 @@ import { Kindergarden } from '../shared/interfaces/Kindergarden';
 export class KindergarteninfoComponent {
 
   public kindergardens: Kindergarden[] = [];
+  public loading: boolean = true;
 
   public imagePath: string = "./../assets/images/Kindergarten.jpg";
 
@@ -19,9 +20,11 @@ export class KindergarteninfoComponent {
     this.backendService.getKindergardens().subscribe(
       (data: Kindergarden[]) => {
         this.kindergardens = data;
+        this.loading = false;
       },
       error => {
         console.error('Error fetching kindergartens:', error);
+        this.loading = false;
       }
     );
   }

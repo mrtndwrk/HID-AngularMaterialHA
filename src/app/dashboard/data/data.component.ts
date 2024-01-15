@@ -6,6 +6,8 @@ import { PageEvent } from '@angular/material/paginator';
 import { ChildResponse } from 'src/app/shared/interfaces/Child';
 import { Child } from 'src/app/shared/interfaces/Child';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
+import { ViewChild } from '@angular/core';
 
 
 @Component({
@@ -16,25 +18,46 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class DataComponent implements OnInit {
   constructor(public storeService: StoreService, private backendService: BackendService, private snackBar: MatSnackBar) {}
 
+
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+
+
   @Input() currentPage!: number;
   @Output() selectPageEvent = new EventEmitter<number>();
   loading = true;
   kindergartens: any[] = []; // Make sure to update the type accordingly
 
   selectedKindergarten: string | null = null;
+  selectedSortOption: 'name' | 'kindergarten' | 'registrationDate' = 'name';
+  filteredChildren: ChildResponse[] = [];
+
+
 
   ngOnInit(): void {
     this.backendService.getKindergardens().subscribe(kindergartens => {
       this.kindergartens = kindergartens;
     });
     this.backendService.getChildren(this.currentPage).subscribe(() => {
-      this.loadData();
+      this.filteredChildren = this.storeService.children.slice();
+      this.loading = false;
     });
   }
 
-  getAge(birthDate: string) {
-    // ... existing getAge method ...
+  getAge(birthDate: string): number {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+  
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+  
+    return Math.max(0, age);
   }
+  
+  
 
   onPageChange(event: PageEvent): void {
     this.selectPageEvent.emit(event.pageIndex + 1);
@@ -56,17 +79,40 @@ export class DataComponent implements OnInit {
   }
   
 
-  sortChildren(property: string, order: 'asc' | 'desc'): void {
-    this.storeService.children.sort((a, b) => {
-      const comparison = order === 'asc' ? 1 : -1;
+sortChildren(property: string): void {
+  const order: 'asc' | 'desc' = 'asc'; // You can specify the default sorting order here
+  this.storeService.children = this.storeService.children.sort((a, b) => {
+    const comparison = order === 'asc' ? 1 : -1;
+    const aValue = this.getPropertyValue(a, property);
+    const bValue = this.getPropertyValue(b, property);
 
-      // Use type assertion to avoid TypeScript errors
-      const aValue = (a as any)[property];
-      const bValue = (b as any)[property];
+    if (aValue !== undefined && bValue !== undefined) {
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        return aValue.localeCompare(bValue) * comparison;
+      } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+        return (aValue - bValue) * comparison;
+      }
+    }
 
-      return aValue.localeCompare(bValue) * comparison;
-    });
+    return 0;
+  });
+}
+
+  
+  private getPropertyValue(obj: any, key: string): any {
+    return key.split('.').reduce((acc, current) => acc?.[current], obj);
   }
+  
+  
+  
+
+  sortedChildren(): ChildResponse[] {
+    this.sortChildren('asc'); // You can specify the default sorting order here
+    return this.storeService.children;
+  }
+  
+  
+  
 
   private loadData(): void {
     this.loading = true;

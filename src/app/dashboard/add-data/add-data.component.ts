@@ -35,7 +35,7 @@ export class AddDataComponent implements OnInit {
       name: ['', [Validators.required]],
       kindergardenId: ['', Validators.required],
       birthDate: [null, Validators.required]
-    });
+    })
   }
 
   onSubmit(): void {

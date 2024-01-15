@@ -15,4 +15,5 @@ export interface Child {
     birthDate: string,
     kindergarden: Kindergarden,
     kindergardenId: number
+    registrationDate: Date;
   }
