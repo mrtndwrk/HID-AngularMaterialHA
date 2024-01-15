@@ -8,6 +8,7 @@ import { Child } from 'src/app/shared/interfaces/Child';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -17,6 +18,10 @@ import { ViewChild } from '@angular/core';
 })
 export class DataComponent implements OnInit {
   constructor(public storeService: StoreService, private backendService: BackendService, private snackBar: MatSnackBar) {}
+
+  sortProperty: string = '';
+  sortOrder: 'asc' | 'desc' = 'asc';
+  dataSource: MatTableDataSource<ChildResponse> = new MatTableDataSource<ChildResponse>([]);
 
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -33,15 +38,23 @@ export class DataComponent implements OnInit {
 
 
 
-  ngOnInit(): void {
-    this.backendService.getKindergardens().subscribe(kindergartens => {
-      this.kindergartens = kindergartens;
-    });
-    this.backendService.getChildren(this.currentPage).subscribe(() => {
-      this.filteredChildren = this.storeService.children.slice();
-      this.loading = false;
-    });
-  }
+ngOnInit(): void {
+  this.backendService.getKindergardens().subscribe(kindergartens => {
+    this.kindergartens = kindergartens;
+  });
+
+  this.backendService.getChildren(this.currentPage).subscribe(() => {
+    this.filteredChildren = this.storeService.children.slice();
+    this.loading = false;
+
+    // Initialize the MatTableDataSource after loading the data
+    this.dataSource = new MatTableDataSource<ChildResponse>(this.storeService.children);
+
+    // Assign the MatSort to your data source
+    this.dataSource.sort = this.sort;
+  });
+}
+
 
   getAge(birthDate: string): number {
     const today = new Date();
@@ -79,24 +92,44 @@ export class DataComponent implements OnInit {
   }
   
 
-sortChildren(property: string): void {
-  const order: 'asc' | 'desc' = 'asc'; // You can specify the default sorting order here
-  this.storeService.children = this.storeService.children.sort((a, b) => {
-    const comparison = order === 'asc' ? 1 : -1;
-    const aValue = this.getPropertyValue(a, property);
-    const bValue = this.getPropertyValue(b, property);
 
-    if (aValue !== undefined && bValue !== undefined) {
-      if (typeof aValue === 'string' && typeof bValue === 'string') {
-        return aValue.localeCompare(bValue) * comparison;
-      } else if (typeof aValue === 'number' && typeof bValue === 'number') {
-        return (aValue - bValue) * comparison;
-      }
+  
+  sortChildren(property: string): void {
+    if (this.sortProperty === property) {
+      // Toggle sort order if the same property is clicked
+      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    } else {
+      // Set default sort order when a new property is clicked
+      this.sortOrder = 'asc';
     }
-
-    return 0;
-  });
-}
+  
+    this.sortProperty = property;
+  
+    this.storeService.children = this.storeService.children.slice().sort((a, b) => {
+      const aValue = this.getPropertyValue(a, property);
+      const bValue = this.getPropertyValue(b, property);
+  
+      if (aValue !== undefined && bValue !== undefined) {
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return aValue.localeCompare(bValue) * (this.sortOrder === 'asc' ? 1 : -1);
+        } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return (aValue - bValue) * (this.sortOrder === 'asc' ? 1 : -1);
+        }
+      }
+  
+      return 0;
+    });
+  }
+  
+  
+  getSortIcon(property: string): string {
+    if (this.sortProperty === property) {
+      return this.sortOrder === 'asc' ? '▲' : '▼';
+    }
+    return ''; // Empty string if not currently sorted by this property
+  }
+  
+  
 
   
   private getPropertyValue(obj: any, key: string): any {

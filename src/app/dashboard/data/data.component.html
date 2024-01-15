@@ -1,13 +1,13 @@
 <div class="child-list">
-    <div class="header">
-      <div class="header-item">Name</div>
-      <div class="header-item">Kindergarten</div>
-      <div class="header-item">Adresse</div>
-      <div class="header-item">Alter</div>
-      <div class="header-item">Geburtsdatum</div>
-      <div class="header-item">Registrierungsdatum</div>
-      <div class="header-item"></div>
-    </div>
+  <div class="header">
+    <div class="header-item" (click)="sortChildren('name')">Name {{getSortIcon('name')}}</div>
+    <div class="header-item" (click)="sortChildren('kindergarten.name')">Kindergarten {{getSortIcon('kindergarten.name')}}</div>
+    <div class="header-item" (click)="sortChildren('kindergarden.address')">Adresse {{getSortIcon('kindergarden.address')}}</div>
+    <div class="header-item" (click)="sortChildren('birthDate')">Alter {{getSortIcon('birthDate')}}</div>
+    <div class="header-item" (click)="sortChildren('birthDate')">Geburtsdatum {{getSortIcon('birthDate')}}</div>
+    <div class="header-item" (click)="sortChildren('registrationDate')">Registrierungsdatum {{getSortIcon('registrationDate')}}</div>
+    <div class="header-item"></div>
+  </div>
 
     <mat-form-field>
       <mat-label>Sort by</mat-label>
@@ -49,6 +49,6 @@
 
 <mat-paginator
   [length]="storeService.childrenTotalCount"
-  [pageSize]="2"
+  [pageSize]="10"
   (page)="onPageChange($event)"
 ></mat-paginator>

@@ -27,6 +27,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 
 
@@ -64,6 +65,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatSortModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
