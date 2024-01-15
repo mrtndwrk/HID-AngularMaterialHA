@@ -51,7 +51,7 @@ button{
     width: 70vw;
     max-width: 1300px;
   }
-  
+
   .child-item {
     display: flex;
     justify-content: space-between;
@@ -59,6 +59,12 @@ button{
     padding: 8px;
     border-bottom: 1px solid #ccc;
   }
+
+  .child-item.light-gray-background {
+    background-color: #f0f0f0; 
+  }
+  
+
   
   .child-property {
     flex: 1;

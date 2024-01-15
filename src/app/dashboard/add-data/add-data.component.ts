@@ -45,10 +45,8 @@ export class AddDataComponent implements OnInit {
       this.openSuccessDialog();
       this.isFormOpen = false;
   
-      // Determine the last page after adding a child
       const lastPage = Math.ceil((this.storeService.childrenTotalCount + 1) / CHILDREN_PER_PAGE);
   
-      // Emit the event to change the page to the last page
       this.selectPageEvent.emit(lastPage);
     }
   }
@@ -61,12 +59,10 @@ export class AddDataComponent implements OnInit {
   openSuccessDialog(): void {
     const modalRef = this.modalService.open(SuccessDialogComponent);
     modalRef.result.then((result) => {
-      // Close the form when the modal is closed
       if (result === 'OK') {
         this.isFormOpen = false;
       }
     }).catch(() => {
-      // Handle the case when the modal is dismissed without clicking the OK button
       this.isFormOpen = false;
     });
   }

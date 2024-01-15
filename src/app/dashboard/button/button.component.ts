@@ -7,7 +7,7 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 })
 export class ButtonComponent {
   @Output() toggleForm: EventEmitter<void> = new EventEmitter<void>();
-  @Input() isFormOpen: boolean = false;
+  @Input() isFormOpen: boolean = true;
 
   onToggleForm(): void {
     console.log('Toggle form button clicked');

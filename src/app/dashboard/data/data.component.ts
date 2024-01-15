@@ -23,6 +23,7 @@ export class DataComponent implements OnInit {
   sortOrder: 'asc' | 'desc' = 'asc';
   dataSource: MatTableDataSource<ChildResponse> = new MatTableDataSource<ChildResponse>([]);
 
+  currentPageSize = 10; 
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
@@ -95,13 +96,8 @@ ngOnInit(): void {
 
   
   sortChildren(property: string): void {
-    if (this.sortProperty === property) {
-      // Toggle sort order if the same property is clicked
-      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
-    } else {
-      // Set default sort order when a new property is clicked
-      this.sortOrder = 'asc';
-    }
+    // Toggle sort order if the same property is clicked
+    this.sortOrder = this.sortProperty === property ? (this.sortOrder === 'asc' ? 'desc' : 'asc') : 'asc';
   
     this.sortProperty = property;
   
@@ -122,11 +118,12 @@ ngOnInit(): void {
   }
   
   
+  
   getSortIcon(property: string): string {
     if (this.sortProperty === property) {
       return this.sortOrder === 'asc' ? '▲' : '▼';
     }
-    return ''; // Empty string if not currently sorted by this property
+    return ''; 
   }
   
   

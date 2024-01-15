@@ -12,7 +12,7 @@ export class DashboardComponent {
     this.currentPage = newPageCount;
   }
 
-  showForm = false;
+  showForm = true;
 
 toggleForm(): void {
   this.showForm = !this.showForm;
