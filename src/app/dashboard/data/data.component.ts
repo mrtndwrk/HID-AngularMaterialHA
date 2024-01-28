@@ -110,11 +110,15 @@ export class DataComponent implements OnInit {
       const aValue = this.getPropertyValue(a, property);
       const bValue = this.getPropertyValue(b, property);
   
-      if (aValue !== undefined && bValue !== undefined) {
-        if (typeof aValue === 'string' && typeof bValue === 'string') {
-          return aValue.localeCompare(bValue) * (this.sortOrder === 'asc' ? 1 : -1);
-        } else if (typeof aValue === 'number' && typeof bValue === 'number') {
-          return (aValue - bValue) * (this.sortOrder === 'asc' ? 1 : -1);
+      if (property === 'registrationDate') {
+        return (aValue.getTime() - bValue.getTime()) * (this.sortOrder === 'asc' ? 1 : -1);
+      } else {
+        if (aValue !== undefined && bValue !== undefined) {
+          if (typeof aValue === 'string' && typeof bValue === 'string') {
+            return aValue.localeCompare(bValue) * (this.sortOrder === 'asc' ? 1 : -1);
+          } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+            return (aValue - bValue) * (this.sortOrder === 'asc' ? 1 : -1);
+          }
         }
       }
   
@@ -155,17 +159,22 @@ export class DataComponent implements OnInit {
       const aValue = this.getPropertyValue(a, property);
       const bValue = this.getPropertyValue(b, property);
   
-      if (aValue !== undefined && bValue !== undefined) {
-        if (typeof aValue === 'string' && typeof bValue === 'string') {
-          return aValue.localeCompare(bValue) * (this.sortOrder === 'asc' ? 1 : -1);
-        } else if (typeof aValue === 'number' && typeof bValue === 'number') {
-          return (aValue - bValue) * (this.sortOrder === 'asc' ? 1 : -1);
+      if (property === 'registrationDate') {
+        return (aValue.getTime() - bValue.getTime()) * (this.sortOrder === 'asc' ? 1 : -1);
+      } else {
+        if (aValue !== undefined && bValue !== undefined) {
+          if (typeof aValue === 'string' && typeof bValue === 'string') {
+            return aValue.localeCompare(bValue) * (this.sortOrder === 'asc' ? 1 : -1);
+          } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+            return (aValue - bValue) * (this.sortOrder === 'asc' ? 1 : -1);
+          }
         }
       }
   
       return 0;
     });
   }
+  
 
   private loadData(): void {
     this.loading = true;
