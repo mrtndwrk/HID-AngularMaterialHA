@@ -27,14 +27,12 @@ export class DataComponent implements OnInit {
   dataSource: MatTableDataSource<ChildResponse> =
     new MatTableDataSource<ChildResponse>([]);
 
-  searchTerm: string = '';
-
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   @Input() currentPage!: number;
   @Output() selectPageEvent = new EventEmitter<number>();
   loading = true;
-  kindergartens: any[] = []; // Make sure to update the type accordingly
+  kindergartens: any[] = [];
 
   selectedKindergarten: string | null = null;
   selectedSortOption: 'name' | 'kindergarten' | 'registrationDate' = 'name';
@@ -47,18 +45,15 @@ export class DataComponent implements OnInit {
 
     this.backendService.getChildren(this.currentPage).subscribe(() => {
       this.storeService.children = this.filteredChildren =
-        this.storeService.children.slice(); // Update filteredChildren
+        this.storeService.children.slice(); 
       this.loading = false;
 
-      // Initialize the MatTableDataSource after loading the data
       this.dataSource = new MatTableDataSource<ChildResponse>(
         this.storeService.children
       );
 
-      // Assign the MatSort to your data source
       this.dataSource.sort = this.sort;
 
-      // Apply initial filter if a kindergarten is selected
       if (this.selectedKindergarten) {
         this.filterChildrenByKindergarten();
       }

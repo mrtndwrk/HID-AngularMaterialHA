@@ -70,4 +70,5 @@ export class AddDataComponent implements OnInit {
   onToggleForm(): void {
     this.isFormOpen = !this.isFormOpen;
   }
+
 }
