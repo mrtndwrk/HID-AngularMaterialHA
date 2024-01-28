@@ -1,46 +1,73 @@
 <div class="child-list">
   <div class="header">
-    <div class="header-item" (click)="sortChildren('name')">Name {{getSortIcon('name')}}</div>
-    <div class="header-item" (click)="sortChildren('kindergarden.name')">Kindergarten {{getSortIcon('kindergarden.name')}}</div>
-    <div class="header-item" (click)="sortChildren('kindergarden.address')">Adresse {{getSortIcon('kindergarden.address')}}</div>
-    <div class="header-item" (click)="sortChildren('birthDate')">Alter {{getSortIcon('birthDate')}}</div>
-    <div class="header-item" (click)="sortChildren('birthDate')">Geburtsdatum {{getSortIcon('birthDate')}}</div>
-    <div class="header-item" (click)="sortChildren('registrationDate')">Registrierungsdatum {{getSortIcon('registrationDate')}}</div>
+    <div class="header-item" (click)="sortChildren('name')">
+      Name {{ getSortIcon("name") }}
+    </div>
+    <div class="header-item" (click)="sortChildren('kindergarden.name')">
+      Kindergarten {{ getSortIcon("kindergarden.name") }}
+    </div>
+    <div class="header-item" (click)="sortChildren('kindergarden.address')">
+      Adresse {{ getSortIcon("kindergarden.address") }}
+    </div>
+    <div class="header-item" (click)="sortChildren('birthDate')">
+      Alter {{ getSortIcon("birthDate") }}
+    </div>
+    <div class="header-item" (click)="sortChildren('birthDate')">
+      Geburtsdatum {{ getSortIcon("birthDate") }}
+    </div>
+    <div class="header-item" (click)="sortChildren('registrationDate')">
+      Registrierungsdatum {{ getSortIcon("registrationDate") }}
+    </div>
     <div class="header-item"></div>
   </div>
 
-
-  <mat-form-field>
-    <mat-label>Filter by Kindergarten</mat-label>
-    <mat-select [(value)]="selectedKindergarten" (change)="onKindergartenChange()">
-      <mat-option *ngFor="let kindergarten of kindergartens" [value]="kindergarten.name">
+  <mat-form-field class="filter-dropdown">
+    <mat-label>Nach Kindergarten filtern</mat-label>
+    <mat-select
+      [(value)]="selectedKindergarten"
+      (change)="onKindergartenChange()"
+    >
+      <mat-option value="alle">Alle Kindergärten</mat-option>
+      <mat-option
+        *ngFor="let kindergarten of kindergartens"
+        [value]="kindergarten.name"
+      >
         {{ kindergarten.name }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-    
-    <div class="loading-spinner" *ngIf="loading">
-      <mat-spinner mode="indeterminate"></mat-spinner>
+
+  <div class="loading-spinner" *ngIf="loading">
+    <mat-spinner mode="indeterminate"></mat-spinner>
+  </div>
+
+  <div
+    class="child-item"
+    *ngFor="let child of sortedChildren(); let i = index"
+    [class.light-gray-background]="i % 2 === 1"
+  >
+    <div class="child-property">{{ child.name }}</div>
+    <div class="child-property">{{ child.kindergarden.name }}</div>
+    <div class="child-property">{{ child.kindergarden.address }}</div>
+    <div class="child-property">{{ getAge(child.birthDate) }}</div>
+    <div class="child-property">{{ child.birthDate | date : "longDate" }}</div>
+    <div class="child-property">
+      {{ child.registrationDate | date : "longDate" }}
     </div>
-
-    
-    <div class="child-item" *ngFor="let child of sortedChildren(); let i = index" [class.light-gray-background]="i % 2 === 1">
-      <div class="child-property">{{child.name}}</div>
-      <div class="child-property">{{child.kindergarden.name}}</div>
-      <div class="child-property">{{child.kindergarden.address}}</div>
-      <div class="child-property">{{getAge(child.birthDate)}}</div>
-      <div class="child-property">{{child.birthDate | date:'longDate'}}</div>
-      <div class="child-property">{{child.registrationDate | date:'longDate'}}</div>
-      <div class="child-property">
-        <button id="btn-child-deregister" mat-flat-button (click)="cancelRegistration(child)">Kind abmelden</button>
-      </div>
+    <div class="child-property">
+      <button
+        id="btn-child-deregister"
+        mat-flat-button
+        (click)="cancelRegistration(child)"
+      >
+        Kind abmelden
+      </button>
     </div>
-  
+  </div>
 
-
-
-<mat-paginator
-  [length]="storeService.childrenTotalCount"
-  [pageSize]="5"
-  (page)="onPageChange($event)"
-></mat-paginator>
+  <mat-paginator
+    [length]="storeService.childrenTotalCount"
+    [pageSize]="5"
+    (page)="onPageChange($event)"
+  ></mat-paginator>
+</div>

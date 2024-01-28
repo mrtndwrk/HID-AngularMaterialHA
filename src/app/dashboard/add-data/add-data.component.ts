@@ -11,10 +11,8 @@ import { EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-add-data',
   templateUrl: './add-data.component.html',
-  styleUrls: ['./add-data.component.scss']
+  styleUrls: ['./add-data.component.scss'],
 })
-
-
 export class AddDataComponent implements OnInit {
   @Output() selectPageEvent: EventEmitter<number> = new EventEmitter<number>();
 
@@ -23,7 +21,7 @@ export class AddDataComponent implements OnInit {
     public storeService: StoreService,
     public backendService: BackendService,
     public dialog: MatDialog,
-    private modalService: NgbModal,
+    private modalService: NgbModal
   ) {}
 
   public addChildForm: any;
@@ -34,37 +32,39 @@ export class AddDataComponent implements OnInit {
     this.addChildForm = this.formbuilder.group({
       name: ['', [Validators.required]],
       kindergardenId: ['', Validators.required],
-      birthDate: [null, Validators.required]
-    })
+      birthDate: [null, Validators.required],
+    });
   }
 
   onSubmit(): void {
     if (this.addChildForm.valid) {
-      this.backendService.addChildData(this.addChildForm.value, this.currentPage);
+      this.backendService.addChildData(
+        this.addChildForm.value,
+        this.currentPage
+      );
       this.addChildForm.reset();
       this.openSuccessDialog();
       this.isFormOpen = false;
-  
-      const lastPage = Math.ceil((this.storeService.childrenTotalCount + 1) / CHILDREN_PER_PAGE);
-  
+
+      const lastPage = Math.ceil(
+        (this.storeService.childrenTotalCount + 1) / CHILDREN_PER_PAGE
+      );
+
       this.selectPageEvent.emit(lastPage);
     }
   }
-  
-
-
-  
-  
 
   openSuccessDialog(): void {
     const modalRef = this.modalService.open(SuccessDialogComponent);
-    modalRef.result.then((result) => {
-      if (result === 'OK') {
+    modalRef.result
+      .then((result) => {
+        if (result === 'OK') {
+          this.isFormOpen = false;
+        }
+      })
+      .catch(() => {
         this.isFormOpen = false;
-      }
-    }).catch(() => {
-      this.isFormOpen = false;
-    });
+      });
   }
 
   onToggleForm(): void {

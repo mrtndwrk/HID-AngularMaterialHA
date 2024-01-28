@@ -1,40 +1,49 @@
-<form  [formGroup]="addChildForm" (ngSubmit)="onSubmit()">
-    <h2>Ihr Kind anmelden:</h2>
-  
-    <mat-form-field>
-      <input matInput placeholder="Name" type="input" formControlName="name">
-      <mat-error *ngIf="addChildForm.get('name').hasError('required')">
-        Name ist erforderlich
-      </mat-error>
-    </mat-form-field>
-  
-    <mat-form-field>
-      <mat-label>Geburtsdatum</mat-label>
-      <input matInput formControlName="birthDate" [matDatepicker]="picker">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <mat-error *ngIf="addChildForm.get('birthDate').hasError('required')">
-        Bitte geben Sie ein korrektes Geburtsdatum ein.
-      </mat-error>
-      <mat-error *ngIf="addChildForm.get('birthDate').hasError('pattern')">
-        Das Datumsformat sollte TT.MM.JJJJ sein.
-      </mat-error>
-    </mat-form-field>
-  
-    <mat-form-field appearance="fill" class="custom-dropdown">
-      <mat-label>Kindergarten</mat-label>
-      <mat-select formControlName="kindergardenId">
-        <mat-option value="" disabled>Bitte auswählen</mat-option>
-        <mat-option *ngFor="let kindergarden of storeService.kindergardens" [value]="kindergarden.id">
-          {{kindergarden.name}}, {{kindergarden.address}}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="addChildForm.get('kindergardenId').hasError('required')">
-        Bitte wählen Sie einen Kindergarten aus.
-      </mat-error>
-    </mat-form-field>
-  
-    <button id="submitbtn" mat-flat-button color="accent" type="submit" [disabled]="!addChildForm.valid">Erfassen</button>
-  </form>
+<form [formGroup]="addChildForm" (ngSubmit)="onSubmit()">
+  <h2>Ihr Kind anmelden:</h2>
 
-  
+  <mat-form-field>
+    <input matInput placeholder="Name" type="input" formControlName="name" />
+    <mat-error *ngIf="addChildForm.get('name').hasError('required')">
+      Name ist erforderlich
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Geburtsdatum</mat-label>
+    <input matInput formControlName="birthDate" [matDatepicker]="picker" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="addChildForm.get('birthDate').hasError('required')">
+      Bitte geben Sie ein korrektes Geburtsdatum ein.
+    </mat-error>
+    <mat-error *ngIf="addChildForm.get('birthDate').hasError('pattern')">
+      Das Datumsformat sollte TT.MM.JJJJ sein.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="custom-dropdown">
+    <mat-label>Kindergarten</mat-label>
+    <mat-select formControlName="kindergardenId">
+      <mat-option value="" disabled>Bitte auswählen</mat-option>
+      <mat-option
+        *ngFor="let kindergarden of storeService.kindergardens"
+        [value]="kindergarden.id"
+      >
+        {{ kindergarden.name }}, {{ kindergarden.address }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="addChildForm.get('kindergardenId').hasError('required')">
+      Bitte wählen Sie einen Kindergarten aus.
+    </mat-error>
+  </mat-form-field>
+
+  <button
+    id="submitbtn"
+    mat-flat-button
+    color="accent"
+    type="submit"
+    [disabled]="!addChildForm.valid"
+  >
+    Erfassen
+  </button>
+</form>

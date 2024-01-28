@@ -1,39 +1,35 @@
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
-
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 form {
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  
-  h2 {
-    margin-top: 10px;
-    text-align: center;
-    color: #333;
-  }
-  
-  mat-form-field {
-    width: 100%;
-    margin-bottom: 16px;
-  }
-  
-  input.mat-input {
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  mat-datepicker-toggle {
-    cursor: pointer;
-  }
-  
-  .custom-dropdown {
-    width: 100%;
-  }
-  
- 
-  button {
-    width: 100%;
-    margin-top: 16px;
-  }
+  max-width: 400px;
+  margin: 0 auto;
+}
 
-  
+h2 {
+  margin-top: 10px;
+  text-align: center;
+  color: #333;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+input.mat-input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+mat-datepicker-toggle {
+  cursor: pointer;
+}
+
+.custom-dropdown {
+  width: 100%;
+}
+
+button {
+  width: 100%;
+  margin-top: 16px;
+}

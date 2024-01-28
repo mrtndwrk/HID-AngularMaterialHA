@@ -25,18 +25,27 @@ export class BackendService {
   
 
   public getChildren(page: number): Observable<void> {
-    return this.http.get<ChildResponse[]>(`http://localhost:5000/childs?_expand=kindergarden&_page=${page}&_limit=${CHILDREN_PER_PAGE}`, { observe: 'response' }).pipe(
+    const cacheBuster = new Date().getTime();
+    const url = `http://localhost:5000/childs?_expand=kindergarden&_page=${page}&_limit=${CHILDREN_PER_PAGE}&_cb=${cacheBuster}`;
+  
+    return this.http.get<ChildResponse[]>(url, { observe: 'response' }).pipe(
       tap(data => {
         this.storeService.children = data.body!.map(child => {
-          return { ...child, registrationDate: new Date() }; 
+          return { ...child, registrationDate: new Date(child.registrationDate) }; 
         });
         this.storeService.childrenTotalCount = Number(data.headers.get('X-Total-Count'));
       }),
       map(() => {})
     );
   }
+  
+
+  
 
     public addChildData(child: Child, page:  number) {
+
+      child.registrationDate = new Date();
+
       this.http.post('http://localhost:5000/childs', child).subscribe(_ => {
         this.getChildren(page);
       })
@@ -45,7 +54,7 @@ export class BackendService {
     public deleteChildData(childId: string, page: number): Observable<void> {
       return this.http.delete(`http://localhost:5000/childs/${childId}`).pipe(
         tap(() => this.getChildren(page)),
-        // Ensure the observable returns void
+        
         map(() => {})
       );
     }

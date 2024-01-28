@@ -192,9 +192,10 @@ export class DataComponent implements OnInit {
 
   
   onKindergartenChange(): void {
-    this.filteredChildren = this.filterChildrenByKindergarten();
-    
+    this.filterChildrenByKindergarten();
+    this.dataSource.data = this.filteredChildren;
   }
+  
   
   
   
