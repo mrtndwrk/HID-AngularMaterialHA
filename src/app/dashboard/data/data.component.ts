@@ -143,7 +143,7 @@ export class DataComponent implements OnInit {
 
   getSortIcon(property: string): string {
     if (this.sortProperty === property) {
-      return this.sortOrder === 'asc' ? '▼' : '▲';
+      return this.sortOrder === 'asc' ? '↓' : '↑';
     }
     return '';
   }
