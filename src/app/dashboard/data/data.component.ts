@@ -5,28 +5,31 @@ import { StoreService } from 'src/app/shared/store.service';
 import { PageEvent } from '@angular/material/paginator';
 import { ChildResponse } from 'src/app/shared/interfaces/Child';
 import { Child } from 'src/app/shared/interfaces/Child';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 
-
 @Component({
   selector: 'app-data',
   templateUrl: './data.component.html',
-  styleUrls: ['./data.component.scss']
+  styleUrls: ['./data.component.scss'],
 })
 export class DataComponent implements OnInit {
-  constructor(public storeService: StoreService, private backendService: BackendService, private snackBar: MatSnackBar) {}
+  constructor(
+    public storeService: StoreService,
+    private backendService: BackendService,
+    private snackBar: MatSnackBar
+  ) {}
 
   sortProperty: string = '';
   sortOrder: 'asc' | 'desc' = 'asc';
-  dataSource: MatTableDataSource<ChildResponse> = new MatTableDataSource<ChildResponse>([]);
+  dataSource: MatTableDataSource<ChildResponse> =
+    new MatTableDataSource<ChildResponse>([]);
 
-  currentPageSize = 10; 
+  searchTerm: string = '';
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
-
 
   @Input() currentPage!: number;
   @Output() selectPageEvent = new EventEmitter<number>();
@@ -37,23 +40,24 @@ export class DataComponent implements OnInit {
   selectedSortOption: 'name' | 'kindergarten' | 'registrationDate' = 'name';
   filteredChildren: ChildResponse[] = [];
 
-
-
   ngOnInit(): void {
-    this.backendService.getKindergardens().subscribe(kindergartens => {
+    this.backendService.getKindergardens().subscribe((kindergartens) => {
       this.kindergartens = kindergartens;
     });
-  
+
     this.backendService.getChildren(this.currentPage).subscribe(() => {
-      this.storeService.children = this.filteredChildren = this.storeService.children.slice(); // Update filteredChildren
+      this.storeService.children = this.filteredChildren =
+        this.storeService.children.slice(); // Update filteredChildren
       this.loading = false;
-  
+
       // Initialize the MatTableDataSource after loading the data
-      this.dataSource = new MatTableDataSource<ChildResponse>(this.storeService.children);
-  
+      this.dataSource = new MatTableDataSource<ChildResponse>(
+        this.storeService.children
+      );
+
       // Assign the MatSort to your data source
       this.dataSource.sort = this.sort;
-  
+
       // Apply initial filter if a kindergarten is selected
       if (this.selectedKindergarten) {
         this.filterChildrenByKindergarten();
@@ -61,22 +65,22 @@ export class DataComponent implements OnInit {
     });
   }
 
-
   getAge(birthDate: string): number {
     const today = new Date();
     const birth = new Date(birthDate);
-    
+
     let age = today.getFullYear() - birth.getFullYear();
     const monthDiff = today.getMonth() - birth.getMonth();
-  
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birth.getDate())
+    ) {
       age--;
     }
-  
+
     return Math.max(0, age);
   }
-  
-  
 
   onPageChange(event: PageEvent): void {
     this.selectPageEvent.emit(event.pageIndex + 1);
@@ -91,90 +95,101 @@ export class DataComponent implements OnInit {
   cancelRegistration(child: ChildResponse): void {
     this.loading = true;
     this.storeService.children = [];
-    this.backendService.deleteChildData(child.id, this.currentPage).subscribe(() => {
-      this.loadData();
-      this.showNotification(`${child.name} wurde aus Kindergarten ${child.kindergarden.name} abgemeldet`);
-    });
+    this.backendService
+      .deleteChildData(child.id, this.currentPage)
+      .subscribe(() => {
+        this.loadData();
+        this.showNotification(
+          `${child.name} wurde aus Kindergarten ${child.kindergarden.name} abgemeldet`
+        );
+      });
   }
-  
-
-  
-  
 
   sortChildren(property: string): void {
-    this.sortOrder = this.sortProperty === property ? (this.sortOrder === 'asc' ? 'desc' : 'asc') : 'asc';
-  
+    this.sortOrder =
+      this.sortProperty === property
+        ? this.sortOrder === 'asc'
+          ? 'desc'
+          : 'asc'
+        : 'asc';
+
     this.sortProperty = property;
-  
-    this.storeService.children = this.storeService.children.slice().sort((a, b) => {
-      const aValue = this.getPropertyValue(a, property);
-      const bValue = this.getPropertyValue(b, property);
-  
-      if (property === 'registrationDate') {
-        return (aValue.getTime() - bValue.getTime()) * (this.sortOrder === 'asc' ? 1 : -1);
-      } else {
-        if (aValue !== undefined && bValue !== undefined) {
-          if (typeof aValue === 'string' && typeof bValue === 'string') {
-            return aValue.localeCompare(bValue) * (this.sortOrder === 'asc' ? 1 : -1);
-          } else if (typeof aValue === 'number' && typeof bValue === 'number') {
-            return (aValue - bValue) * (this.sortOrder === 'asc' ? 1 : -1);
+
+    this.storeService.children = this.storeService.children
+      .slice()
+      .sort((a, b) => {
+        const aValue = this.getPropertyValue(a, property);
+        const bValue = this.getPropertyValue(b, property);
+
+        if (property === 'registrationDate') {
+          return (
+            (aValue.getTime() - bValue.getTime()) *
+            (this.sortOrder === 'asc' ? 1 : -1)
+          );
+        } else {
+          if (aValue !== undefined && bValue !== undefined) {
+            if (typeof aValue === 'string' && typeof bValue === 'string') {
+              return (
+                aValue.localeCompare(bValue) *
+                (this.sortOrder === 'asc' ? 1 : -1)
+              );
+            } else if (
+              typeof aValue === 'number' &&
+              typeof bValue === 'number'
+            ) {
+              return (aValue - bValue) * (this.sortOrder === 'asc' ? 1 : -1);
+            }
           }
         }
-      }
-  
-      return 0;
-    });
-  }
-  
 
-  
-  
+        return 0;
+      });
+  }
+
   getSortIcon(property: string): string {
     if (this.sortProperty === property) {
       return this.sortOrder === 'asc' ? '▼' : '▲';
     }
-    return ''; 
+    return '';
   }
 
-
-
-  
   private getPropertyValue(obj: any, key: string): any {
     return key.split('.').reduce((acc, current) => acc?.[current], obj);
   }
-  
-  
 
-  
-  
   sortedChildren(): ChildResponse[] {
     const filteredChildren = this.filterChildrenByKindergarten();
     return this.sortChildrenArray(filteredChildren, this.sortProperty);
   }
 
-
-  
-  sortChildrenArray(children: ChildResponse[], property: string): ChildResponse[] {
+  sortChildrenArray(
+    children: ChildResponse[],
+    property: string
+  ): ChildResponse[] {
     return children.slice().sort((a, b) => {
       const aValue = this.getPropertyValue(a, property);
       const bValue = this.getPropertyValue(b, property);
-  
+
       if (property === 'registrationDate') {
-        return (aValue.getTime() - bValue.getTime()) * (this.sortOrder === 'asc' ? 1 : -1);
+        return (
+          (aValue.getTime() - bValue.getTime()) *
+          (this.sortOrder === 'asc' ? 1 : -1)
+        );
       } else {
         if (aValue !== undefined && bValue !== undefined) {
           if (typeof aValue === 'string' && typeof bValue === 'string') {
-            return aValue.localeCompare(bValue) * (this.sortOrder === 'asc' ? 1 : -1);
+            return (
+              aValue.localeCompare(bValue) * (this.sortOrder === 'asc' ? 1 : -1)
+            );
           } else if (typeof aValue === 'number' && typeof bValue === 'number') {
             return (aValue - bValue) * (this.sortOrder === 'asc' ? 1 : -1);
           }
         }
       }
-  
+
       return 0;
     });
   }
-  
 
   private loadData(): void {
     this.loading = true;
@@ -185,31 +200,20 @@ export class DataComponent implements OnInit {
 
   private showNotification(message: string): void {
     this.snackBar.open(message, 'OK', {
-      duration: 3000, 
+      duration: 3000,
     });
   }
 
-
-
-
   filterChildrenByKindergarten(): ChildResponse[] {
     return this.selectedKindergarten
-      ? this.storeService.children.filter(child => child.kindergarden.name === this.selectedKindergarten)
+      ? this.storeService.children.filter(
+          (child) => child.kindergarden.name === this.selectedKindergarten
+        )
       : this.storeService.children.slice();
   }
-  
 
-  
   onKindergartenChange(): void {
     this.filterChildrenByKindergarten();
     this.dataSource.data = this.filteredChildren;
   }
-  
-  
-  
-  
-
 }
-
-
-

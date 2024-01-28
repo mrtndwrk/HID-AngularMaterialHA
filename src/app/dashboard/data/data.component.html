@@ -27,7 +27,6 @@
       [(value)]="selectedKindergarten"
       (change)="onKindergartenChange()"
     >
-      <mat-option value="alle">Alle Kindergärten</mat-option>
       <mat-option
         *ngFor="let kindergarten of kindergartens"
         [value]="kindergarten.name"
