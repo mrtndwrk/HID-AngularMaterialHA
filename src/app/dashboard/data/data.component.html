@@ -1,7 +1,7 @@
 <div class="child-list">
   <div class="header">
     <div class="header-item" (click)="sortChildren('name')">Name {{getSortIcon('name')}}</div>
-    <div class="header-item" (click)="sortChildren('kindergarten.name')">Kindergarten {{getSortIcon('kindergarten.name')}}</div>
+    <div class="header-item" (click)="sortChildren('kindergarden.name')">Kindergarten {{getSortIcon('kindergarden.name')}}</div>
     <div class="header-item" (click)="sortChildren('kindergarden.address')">Adresse {{getSortIcon('kindergarden.address')}}</div>
     <div class="header-item" (click)="sortChildren('birthDate')">Alter {{getSortIcon('birthDate')}}</div>
     <div class="header-item" (click)="sortChildren('birthDate')">Geburtsdatum {{getSortIcon('birthDate')}}</div>
@@ -10,14 +10,14 @@
   </div>
 
 
-    <mat-form-field>
-      <mat-label>Filter by Kindergarten</mat-label>
-      <mat-select [(value)]="selectedKindergarten">
-        <mat-option *ngFor="let kindergarten of kindergartens" [value]="kindergarten.name">
-          {{ kindergarten.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field>
+    <mat-label>Filter by Kindergarten</mat-label>
+    <mat-select [(value)]="selectedKindergarten" (change)="onKindergartenChange()">
+      <mat-option *ngFor="let kindergarten of kindergartens" [value]="kindergarten.name">
+        {{ kindergarten.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
     
     <div class="loading-spinner" *ngIf="loading">
       <mat-spinner mode="indeterminate"></mat-spinner>

@@ -25,18 +25,6 @@
       "id": "dNRUtjJ"
     },
     {
-      "name": "asd",
-      "kindergardenId": 2,
-      "birthDate": "2024-01-08T23:00:00.000Z",
-      "id": "42kIDKQ"
-    },
-    {
-      "name": "AS",
-      "kindergardenId": 3,
-      "birthDate": "2024-01-17T23:00:00.000Z",
-      "id": "0HUfUwZ"
-    },
-    {
       "name": "test",
       "kindergardenId": 2,
       "birthDate": "2024-01-08T23:00:00.000Z",
@@ -119,6 +107,12 @@
       "kindergardenId": 3,
       "birthDate": "2021-01-10T23:00:00.000Z",
       "id": "_XbWMIL"
+    },
+    {
+      "name": "Franz Maier",
+      "kindergardenId": 3,
+      "birthDate": "2024-01-22T23:00:00.000Z",
+      "id": "qDVWdl7"
     }
   ],
   "kindergardens": [

@@ -39,22 +39,27 @@ export class DataComponent implements OnInit {
 
 
 
-ngOnInit(): void {
-  this.backendService.getKindergardens().subscribe(kindergartens => {
-    this.kindergartens = kindergartens;
-  });
-
-  this.backendService.getChildren(this.currentPage).subscribe(() => {
-    this.filteredChildren = this.storeService.children.slice();
-    this.loading = false;
-
-    // Initialize the MatTableDataSource after loading the data
-    this.dataSource = new MatTableDataSource<ChildResponse>(this.storeService.children);
-
-    // Assign the MatSort to your data source
-    this.dataSource.sort = this.sort;
-  });
-}
+  ngOnInit(): void {
+    this.backendService.getKindergardens().subscribe(kindergartens => {
+      this.kindergartens = kindergartens;
+    });
+  
+    this.backendService.getChildren(this.currentPage).subscribe(() => {
+      this.storeService.children = this.filteredChildren = this.storeService.children.slice(); // Update filteredChildren
+      this.loading = false;
+  
+      // Initialize the MatTableDataSource after loading the data
+      this.dataSource = new MatTableDataSource<ChildResponse>(this.storeService.children);
+  
+      // Assign the MatSort to your data source
+      this.dataSource.sort = this.sort;
+  
+      // Apply initial filter if a kindergarten is selected
+      if (this.selectedKindergarten) {
+        this.filterChildrenByKindergarten();
+      }
+    });
+  }
 
 
   getAge(birthDate: string): number {
@@ -93,10 +98,10 @@ ngOnInit(): void {
   }
   
 
-
   
+  
+
   sortChildren(property: string): void {
-    // Toggle sort order if the same property is clicked
     this.sortOrder = this.sortProperty === property ? (this.sortOrder === 'asc' ? 'desc' : 'asc') : 'asc';
   
     this.sortProperty = property;
@@ -117,16 +122,17 @@ ngOnInit(): void {
     });
   }
   
+
   
   
   getSortIcon(property: string): string {
     if (this.sortProperty === property) {
-      return this.sortOrder === 'asc' ? '▲' : '▼';
+      return this.sortOrder === 'asc' ? '▼' : '▲';
     }
     return ''; 
   }
-  
-  
+
+
 
   
   private getPropertyValue(obj: any, key: string): any {
@@ -134,15 +140,32 @@ ngOnInit(): void {
   }
   
   
-  
 
+  
+  
   sortedChildren(): ChildResponse[] {
-    this.sortChildren('asc'); // You can specify the default sorting order here
-    return this.storeService.children;
+    const filteredChildren = this.filterChildrenByKindergarten();
+    return this.sortChildrenArray(filteredChildren, this.sortProperty);
   }
+
+
   
+  sortChildrenArray(children: ChildResponse[], property: string): ChildResponse[] {
+    return children.slice().sort((a, b) => {
+      const aValue = this.getPropertyValue(a, property);
+      const bValue = this.getPropertyValue(b, property);
   
+      if (aValue !== undefined && bValue !== undefined) {
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return aValue.localeCompare(bValue) * (this.sortOrder === 'asc' ? 1 : -1);
+        } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return (aValue - bValue) * (this.sortOrder === 'asc' ? 1 : -1);
+        }
+      }
   
+      return 0;
+    });
+  }
 
   private loadData(): void {
     this.loading = true;
@@ -156,4 +179,27 @@ ngOnInit(): void {
       duration: 3000, 
     });
   }
+
+
+
+
+  filterChildrenByKindergarten(): ChildResponse[] {
+    return this.selectedKindergarten
+      ? this.storeService.children.filter(child => child.kindergarden.name === this.selectedKindergarten)
+      : this.storeService.children.slice();
+  }
+  
+
+  
+  onKindergartenChange(): void {
+    this.filteredChildren = this.filterChildrenByKindergarten();
+    
+  }
+  
+  
+  
+
 }
+
+
+
